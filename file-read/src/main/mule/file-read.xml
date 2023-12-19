@@ -18,6 +18,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</db:config>
 	<flow name="file-readFlow" doc:id="7bcf00f8-9cf8-4996-b987-6fe7e53f0bbb" >
 		<http:listener doc:name="Listener" doc:id="5a9d6204-f945-4924-9b95-4a2243a90b3f" config-ref="HTTP_Listener_config" path="/insert"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ac6e2687-b717-4788-ad48-b4d994262631" message="flow started"/>
 		<ee:transform doc:name="Transform Message" doc:id="3bbd622e-8172-4492-a50b-abf4f7471c0b" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
