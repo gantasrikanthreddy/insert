@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="5c187c24-8edd-43fb-90f9-fd8bd1867b48" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="12345" database="db"/>
+	</db:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a3c8b56b-e571-4a4d-a69e-74e25e402f4d" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config1" doc:name="Database Config" doc:id="44fdcf8e-a99a-4c0e-ae00-471726184c4c" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="12345" database="db" />
+	</db:config>
+	<flow name="file-readFlow" doc:id="7bcf00f8-9cf8-4996-b987-6fe7e53f0bbb" >
+		<http:listener doc:name="Listener" doc:id="5a9d6204-f945-4924-9b95-4a2243a90b3f" config-ref="HTTP_Listener_config" path="/insert"/>
+		<ee:transform doc:name="Transform Message" doc:id="3bbd622e-8172-4492-a50b-abf4f7471c0b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+1 to 100 map
+{
+	id: 200 + $$,
+	name: "srikanth",
+	number: "100651",
+	mailid: "ganta@gmail.com"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="4a8aae87-0e33-4a5a-b3cb-b8844ec215f9" >
+			<db:insert doc:name="Insert" doc:id="2834b8e9-ea9b-4803-a5d9-324a13eddedf" config-ref="Database_Config1">
+			<db:sql><![CDATA[INSERT INTO db.emp (id, name, number, mailid)
+VALUES (:id, :name, :number, :mailid);]]></db:sql>
+			<db:input-parameters><![CDATA[#[payload]]]></db:input-parameters>
+		</db:insert>
+		</foreach>
+		<ee:transform doc:name="Transform Message" doc:id="f7d85dc8-7694-402d-a356-c97c5087ff3a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="730620d8-f0d0-4f92-8e27-9710aebda101" message="#[payload]"/>
+	</flow>
+</mule>

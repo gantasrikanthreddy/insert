@@ -1,0 +1,24 @@
+[
+{
+ "emp id": "100",
+ "emp name": "srikanth",
+ "emp gender": "male",
+ "emp city": "markapur",
+ "emp address": "kondepally",
+ "emp salary": "40000",
+ "emp mobile": "9440639542",
+ "emp mailid": "ganta@gmail.com"
+},
+
+{
+ "emp id": "100",
+ "emp name": "srikanth",
+ "emp gender": "male",
+ "emp city": "markapur",
+ "emp address": "kondepally",
+ "emp salary": "40000",
+ "emp mobile": "9440639542",
+ "emp mailid": "ganta@gmail.com"
+ }
+] 
+ 

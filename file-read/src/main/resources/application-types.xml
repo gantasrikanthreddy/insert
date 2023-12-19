@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="inputCSVMetadat" format="csv">
+      <types:shape format="weave" example="examples/sample.csv"><![CDATA[%dw 2.0
+
+type inputCSVMetadat = Array<{|  id: String,   name: String,   gender: String,   city: String,   address: String,   salary: String,   mobile: String,   mailid: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="outputCSVMetadata" format="json">
+      <types:shape format="weave" example="examples/output.CSV"><![CDATA[%dw 2.0
+
+type outputCSVMetadata = Array<{|  "emp id": String,   "emp name": String,   "emp gender": String,   "emp city": String,   "emp address": String,   "emp salary": String,   "emp mobile": String,   "emp mailid": String|}> {"example": "[{\\\"emp id\\\":\\\"100\\\",\\\"emp name\\\":\\\"srikanth\\\",\\\"emp gender\\\":\\\"male\\\",\\\"emp city\\\":\\\"markapur\\\",\\\"emp address\\\":\\\"kondepally\\\",\\\"emp salary\\\":\\\"40000\\\",\\\"emp mobile\\\":\\\"9440639542\\\",\\\"emp mailid\\\":\\\"ganta@gmail.com\\\"},{\\\"emp id\\\":\\\"100\\\",\\\"emp name\\\":\\\"srikanth\\\",\\\"emp gender\\\":\\\"male\\\",\\\"emp city\\\":\\\"markapur\\\",\\\"emp address\\\":\\\"kondepally\\\",\\\"emp salary\\\":\\\"40000\\\",\\\"emp mobile\\\":\\\"9440639542\\\",\\\"emp mailid\\\":\\\"ganta@gmail.com\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+</types:mule>
